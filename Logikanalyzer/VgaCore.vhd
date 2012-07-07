@@ -15,59 +15,70 @@ entity VgaCore is
 end VgaCore;
 
 architecture Behavioral of VgaCore is
-	signal currentRow     : unsigned(9 downto 0) := (others => '0');
-	signal currentColumn  : unsigned(9 downto 0) := (others => '0');
 	signal clock25        : std_logic := '0';
 	
 	constant ScreenWidth  : integer := 640;
 	constant ScreenHeight : integer := 480;
-		
-begin
+
+	signal currentRow     : integer range 0 to 524 := 0;
+	signal currentColumn  : integer range 0 to 799 := 0;
 	
+	signal isVisible : boolean := true;
+begin
+	-- Den Takt halbieren, das heiﬂt, eine 25 MHz-Clock erzeugen (Pixeltakt)
 	process(clock)
 	begin
 		if rising_edge(clock) then
 			clock25 <= not clock25;
 		end if;
 	end process;
+
+	-- Pr¸fung, ob momentan im sichtbaren Bereich.
+	isVisible <= (currentColumn < ScreenWidth) and (currentRow < ScreenHeight);
 	
+	-- Erzeugung des VGA-Signals.
 	process(clock25)
 	begin
 		if rising_edge(clock25) then
-			if (currentColumn >= 640 + 16) and (currentColumn <= 640 + 16 + 96) then
+			-- currentColumn und currentRow hochz‰hlen
+			currentColumn <= currentColumn + 1;
+		
+			if (currentColumn = 799) then
+				currentColumn <= 0;
+				currentRow <= currentRow + 1;
+			end if;
+			
+			if (currentRow = 524) then
+				currentRow <= 0;
+			end if;
+	
+			-- Hier wird gezeichnet
+			if isVisible then
+				-- zeichnen
+				red <= "11";
+				green <= "00";
+				blue <= "00";
+			else
+				-- blank
+				red <= "00";
+				green <= "00";
+				blue <= "00";
+			end if;		
+
+			-- Verarbeitung der Sync-Signale
+			-- Pr¸fen, ob horizontal sync auf low gesetzt werden muss...
+			if (currentColumn >= ScreenWidth + 16) and (currentColumn < ScreenWidth + 16 + 96) then
 				hsync <= '0';
 			else
 				hsync <= '1';
 			end if;
-			
-			if (currentColumn >= 799) then
-				currentColumn <= (others => '0');
-				
-				if (currentRow >= 524) then
-					currentRow <= (others => '0');
-				else
-					currentRow <= currentRow + 1;
-				end if;
-			else
-				currentColumn <= currentColumn + 1;
-			end if;
-			
-			if (currentColumn >= 640) or (currentRow >= 480) then
-				red <= "00";
-				blue <= "00";
-				green <= "00";
-			else
-				red <= "11";
-				blue <= "00";
-				green <= "00";
-			end if;
-			
-			if (currentRow >= 492) and (currentRow <= 493) then
+
+			-- Pr¸fen, ob vertical sync auf low gesetzt werden muss...
+			if (currentRow >= ScreenHeight + 10) and (currentRow < ScreenHeight + 10 + 2) then
 				vsync <= '0';
 			else
 				vsync <= '1';
 			end if;
 		end if;
-	end process;
-	
+	end process;	
 end Behavioral;
