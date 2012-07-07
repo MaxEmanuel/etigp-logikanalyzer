@@ -1,0 +1,10 @@
+net "clock" 	loc = P38 | iostandard = lvcmos33;
+
+net "hsync" 	loc = P89 | iostandard = lvcmos33;
+net "vsync" 	loc = P90 | iostandard = lvcmos33;
+net "red<0>" 	loc = P15 | iostandard = lvcmos33;
+net "red<1>" 	loc = P21 | iostandard = lvcmos33;
+net "green<0>" 	loc = P14 | iostandard = lvcmos33;
+net "green<1>" 	loc = P17 | iostandard = lvcmos33;
+net "blue<0>" 	loc = P91 | iostandard = lvcmos33;
+net "blue<1>" 	loc = P16 | iostandard = lvcmos33;
