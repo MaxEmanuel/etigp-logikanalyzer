@@ -1,0 +1,10 @@
+net "clock" 		loc = P38 | iostandard = lvcmos33;
+
+net "vgaHsync" 		loc = P89 | iostandard = lvcmos33;
+net "vgaVsync" 		loc = P90 | iostandard = lvcmos33;
+net "vgaRed<0>" 	loc = P15 | iostandard = lvcmos33;
+net "vgaRed<1>" 	loc = P21 | iostandard = lvcmos33;
+net "vgaGreen<0>" 	loc = P14 | iostandard = lvcmos33;
+net "vgaGreen<1>" 	loc = P17 | iostandard = lvcmos33;
+net "vgaBlue<0>" 	loc = P91 | iostandard = lvcmos33;
+net "vgaBlue<1>" 	loc = P16 | iostandard = lvcmos33;

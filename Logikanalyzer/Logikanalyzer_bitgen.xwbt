@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=C:\Users\Markus\Desktop\ETI\Logikanalyzer\Logikanalyzer.ncd
+OUTFILE=C:\Users\Markus\Desktop\ETI\Logikanalyzer\Logikanalyzer.bit
+FAMILY=Spartan3
+PART=xc3s200-4vq100
+WORKINGDIR=C:\Users\Markus\Desktop\ETI\Logikanalyzer
+LICENSE=WebPack
+USER_INFO=210645061_0_0_910

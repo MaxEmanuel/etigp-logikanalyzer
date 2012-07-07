@@ -2,8 +2,9 @@ library ieee;
 use ieee.std_logic_1164.ALL;
 use ieee.numeric_std.ALL;
 
+-- Der VGA-Signal-Generator
 entity VgaCore is
-	Port(
+	port(
 		clock : in   std_logic;
 
 		hsync : out  std_logic;
